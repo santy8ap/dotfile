@@ -44,3 +44,10 @@ if status is-interactive
     set -q XDG_CONFIG_HOME && set -l cConf $XDG_CONFIG_HOME/caelestia || set -l cConf $HOME/.config/caelestia
     source $cConf/user-config.fish 2> /dev/null
 end
+
+if status is-interactive
+    if not set -q SSH_AUTH_SOCK
+        eval (ssh-agent -c) > /dev/null
+        ssh-add ~/.ssh/id_ed25519 2>/dev/null
+    end
+end
