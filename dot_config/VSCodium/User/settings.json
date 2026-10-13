@@ -1,0 +1,17 @@
+{
+    "editor.fontFamily": "JetBrainsMono Nerd Font, monospace",
+    "editor.fontLigatures": true,
+    "editor.fontSize": 14,
+    "editor.cursorBlinking": "smooth",
+    "editor.smoothScrolling": true,
+    "editor.minimap.enabled": false,
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "workbench.list.smoothScrolling": true,
+    "window.titleBarStyle": "custom",
+    "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
+    "files.autoSave": "onFocusChange",
+    "editor.formatOnSave": true,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": true
+}
