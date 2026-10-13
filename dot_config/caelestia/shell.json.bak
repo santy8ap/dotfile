@@ -1,0 +1,63 @@
+{
+    "appearance": {
+        "transparency": {
+            "enabled": true
+        }
+    },
+    "launcher": {
+        "actionPrefix": ".",
+        "showOnHover": true,
+        "useFuzzy": {
+            "apps": false,
+            "wallpapers": false
+        }
+    },
+    "notifs": {
+        "openExpanded": true
+    },
+    "paths": {
+        "wallpaperDir": "/home/santy/Imágenes/Wallpapers"
+    },
+    "services": {
+        "defaultPlayer": "Mozilla firefox",
+        "weatherUnits": "Celsius"
+    },
+    "sidebar": {
+        "dragThreshold": 90
+    },
+    "utilities": {
+        "quickToggles": [
+            {
+                "enabled": true,
+                "id": "wifi"
+            },
+            {
+                "enabled": true,
+                "id": "bluetooth"
+            },
+            {
+                "enabled": true,
+                "id": "mic"
+            },
+            {
+                "enabled": true,
+                "id": "settings"
+            },
+            {
+                "enabled": true,
+                "id": "gameMode"
+            },
+            {
+                "enabled": true,
+                "id": "dnd"
+            },
+            {
+                "enabled": true,
+                "id": "vpn"
+            }
+        ],
+        "toasts": {
+            "nowPlaying": true
+        }
+    }
+}

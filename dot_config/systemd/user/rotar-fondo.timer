@@ -1,0 +1,11 @@
+[Unit]
+Description=Cambiar fondo cada 3-4 minutos
+
+[Timer]
+OnActiveSec=2min
+OnUnitActiveSec=2min
+RandomizedDelaySec=20s
+AccuracySec=1s
+
+[Install]
+WantedBy=timers.target
