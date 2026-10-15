@@ -1,0 +1,36 @@
+# ---------------------------------------------------------------------------
+# Paquetes que el instalador NUNCA instala, aunque aparezcan en las listas.
+#
+# Razón de ser: capturar el sistema con `pacman -Qe` trae cosas que son
+# decisión de cada máquina (kernel, bootloader, metapaquetes) y que instalar a
+# ciegas en otra PC puede dejarla sin arrancar o duplicar configuraciones.
+#
+# Para instalarlos de todas formas:  ./install.sh paquetes --with-ignored
+# ---------------------------------------------------------------------------
+
+# --- Metapaquetes: ya están en cualquier instalación de Arch/CachyOS ---
+base
+
+# --- Kernel: se elige al instalar y depende de la máquina ---
+# (instalarlo en otra PC con otro hardware puede dejarla sin boot)
+linux-cachyos
+linux-cachyos-headers
+linux-cachyos-lts
+linux-cachyos-lts-headers
+
+# --- Firmware genérico: lo pone el instalador de CachyOS ---
+# (amd-ucode etc. se filtran por etiqueta hw:, no hace falta listarlos aquí)
+linux-firmware
+
+# --- Microcode del otro fabricante, por si `pacman -Qe` lo trae de rebote ---
+intel-ucode
+
+# --- Gestores de red redundantes cuando se usa NetworkManager ---
+# (dejarlos instalados no molesta, pero reinstalarlos a ciegas no aporta)
+netctl
+iwd
+
+# --- Cosas que solo tienen sentido en la máquina donde se generó la lista ---
+# Descomentar si aparecen en tu lista y no las quieres en otra PC:
+# linux-cachyos-bore
+# cachyos-kernel-manager

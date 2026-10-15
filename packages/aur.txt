@@ -1,0 +1,30 @@
+# ---------------------------------------------------------------------------
+# Paquetes de AUR (y otros repos no oficiales).
+#
+# Se regenera con:  make paquetes   (o scripts/packages-update.sh)
+# El instalador primero busca en los repos oficiales y solo si no está ahí lo
+# instala desde AUR con paru, así que un paquete "promovido" a oficial no rompe.
+#
+# Los comentarios `# TODO:` marcan paquetes cuyo propósito conviene documentar.
+# ---------------------------------------------------------------------------
+
+# --- Caelestia (el shell/entorno completo) ---
+caelestia-shell                   # el shell: paneles, launcher, lock, notificaciones
+caelestia-cli                     # CLI `caelestia` (wallpapers, schemes, hyprland)
+caelestia-firefox-theme           # tema para Firefox/Zen Browser
+quickshell-git                    # dependencia dura de caelestia-shell (QML + Qt6)
+
+# --- Qt fuera de KDE ---
+qtengine                          # QT_QPA_PLATFORMTHEME=qtengine (lo fija hyprland/env.lua)
+darkly-bin                        # estilo Qt oscuro usado por qtengine
+papirus-folders                   # colorear las carpetas del tema Papirus
+
+# --- Aplicaciones ---
+vscodium-bin                      # editor (variable `editor` de hypr/variables.lua)
+equibop-bin                       # cliente de Discord modificado
+orchard                           # TODO: documentar para qué se usa
+
+# --- Sistema / mantenimiento ---
+topgrade                          # actualizador universal (config en ~/.config/topgrade.toml)
+app2unit                          # convierte apps en servicios de usuario systemd
+wl-screenrec                      # grabación de pantalla en Wayland

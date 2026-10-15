@@ -1,6 +1,0 @@
-[Unit]
-Description=Cambiar el fondo de Caelestia
-
-[Service]
-Type=oneshot
-ExecStart=%h/.local/bin/rotar-fondo

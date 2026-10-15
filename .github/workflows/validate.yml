@@ -1,0 +1,19 @@
+name: Validar dotfiles
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Sintaxis y listas (sin modificar el sistema)
+        run: ./scripts/lint.sh --quick
+      - name: Parser de paquetes con pacman simulado
+        run: bash tests/packages.sh
+      - name: Respaldos sin tocar /etc
+        run: bash tests/backup.sh
+      - name: Rutas accidentales y whitespace
+        run: git diff --check HEAD^ HEAD || git diff --check

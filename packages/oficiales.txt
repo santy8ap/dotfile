@@ -1,0 +1,260 @@
+# ---------------------------------------------------------------------------
+# Paquetes de los repositorios oficiales (pacman).
+#
+# Se regenera con:  make paquetes   (o scripts/packages-update.sh)
+# Formato:  <paquete>   [# hw:etiqueta1,etiqueta2  comentario libre]
+#   - Las líneas que empiezan por # y las vacías se ignoran.
+#   - `hw:` filtra por hardware detectado (amd/intel/nvidia/laptop/desktop/
+#     framework). Ver scripts/lib/hardware.sh.
+#   - El instalador detecta solo de qué repo viene cada paquete, así que el
+#     orden y la separación oficial/AUR son solo organizativos.
+# ---------------------------------------------------------------------------
+
+accountsservice
+adw-gtk-theme
+alacritty
+alsa-firmware
+alsa-plugins
+alsa-utils
+amd-ucode                         # hw:amd microcode AMD
+arch-audit
+awesome-terminal-fonts
+base                              # metapaquete: ya está en cualquier Arch (ver ignorar.txt)
+base-devel                        # obligatorio para compilar paquetes de AUR
+bash-completion
+bat
+bind
+bitwarden
+bluez
+bluez-hid2hci
+bluez-libs
+bluez-obex
+bluez-utils
+bpftune-git                       # hw:laptop auto-tuning de red
+btop
+btrfs-progs
+cachy-update
+cachyos-fish-config               # config de fish de cachyos: ¡NO pisar config.fish propio!
+cachyos-gaming-applications
+cachyos-gaming-meta
+cachyos-grub-theme
+cachyos-hello
+cachyos-hooks
+cachyos-kernel-manager
+cachyos-keyring
+cachyos-micro-settings
+cachyos-mirrorlist
+cachyos-packageinstaller
+cachyos-plymouth-bootanimation
+cachyos-plymouth-theme
+cachyos-rate-mirrors
+cachyos-settings
+cachyos-v3-mirrorlist
+cachyos-v4-mirrorlist
+cachyos-wallpapers
+cachyos-zsh-config                # config de zsh de cachyos (se usa fish, pero venía instalado)
+cantarell-fonts
+chezmoi
+chwd
+cliphist
+cpupower
+cryptsetup
+cups
+cups-filters
+cups-pdf
+curl
+device-mapper
+diffutils
+direnv
+discord
+dmemcg-booster                    # booster de cachyos para cgroups de memoria
+dmidecode
+dmraid
+dnsmasq
+docker
+dosfstools
+duf
+e2fsprogs
+efibootmgr
+efitools
+espeak-ng
+ethtool
+exfatprogs
+eza
+f2fs-tools
+fastfetch
+ffmpegthumbnailer
+file-roller
+fish
+foomatic-db
+foomatic-db-engine
+foomatic-db-gutenprint-ppds
+foomatic-db-nonfree
+foomatic-db-nonfree-ppds
+foomatic-db-ppds
+foot
+frameworkintegration              # hw:framework laptops Framework
+fsarchiver
+gammastep
+ghostscript
+git
+github-cli
+glances
+gnome-keyring
+greetd
+greetd-tuigreet
+grub                              # bootloader: instalar no lo reconfigura
+grub-hook                         # regenera grub.cfg al cambiar el kernel
+gsfonts
+gst-libav
+gst-plugin-pipewire
+gst-plugin-va
+gst-plugins-bad
+gst-plugins-ugly
+gutenprint
+gvfs
+hdparm
+hplip
+hwdetect
+hwinfo
+hyprland
+hyprpicker
+imv
+inetutils
+informant                         # necesita `sudo informant enable` (lo hace el instalador)
+iwd
+jfsutils
+jq
+lazygit
+less
+lib32-mesa
+lib32-opencl-mesa                 # hw:amd,intel multilib
+lib32-vulkan-radeon               # hw:amd multilib (juegos/Steam)
+libdvdcss
+libgsf
+libopenraw
+libva-utils
+linux-cachyos                     # kernel: específico de la máquina (ver ignorar.txt)
+linux-cachyos-headers             # kernel: específico de la máquina (ver ignorar.txt)
+linux-cachyos-lts                 # kernel: específico de la máquina (ver ignorar.txt)
+linux-cachyos-lts-headers         # kernel: específico de la máquina (ver ignorar.txt)
+linux-firmware                    # firmware general (ver ignorar.txt)
+localsend
+logrotate
+lsb-release
+lsscsi
+lvm2
+man-db
+man-pages
+mdadm
+meld
+mesa
+mesa-utils
+micro
+mise
+mkinitcpio
+modemmanager
+mousetweaks
+mpv
+mtools
+nano
+nano-syntax-highlighting
+neovim
+netctl
+networkmanager
+networkmanager-openvpn
+nfs-utils
+nilfs-utils
+noto-fonts
+noto-fonts-cjk
+noto-fonts-emoji
+npm
+nss-mdns                          # resolución .local: necesario para localsend
+opencl-mesa                       # hw:amd,intel
+openssh
+orca
+os-prober
+pacman-contrib
+papirus-icon-theme
+paru                              # helper de AUR: en CachyOS viene del repo oficial
+pavucontrol
+perl
+pipewire
+pipewire-alsa
+pipewire-audio
+pipewire-jack
+pipewire-pulse
+pkgfile
+plocate
+plymouth                          # animación de arranque: requiere hook en mkinitcpio
+pnpm
+polkit-gnome
+poppler-glib
+profile-sync-daemon               # instala pero NO se activa solo (riesgo con el perfil)
+protonup-qt
+pv
+pwvucontrol
+python
+python-defusedxml
+python-packaging
+python-pyqt5
+python-reportlab
+qbittorrent
+qt6-wayland
+realtime-privileges               # necesita el grupo `realtime` (lo agrega el instalador)
+rebuild-detector
+reflector
+ripgrep
+rsync
+rustup
+s-nail
+sg3_utils
+shelly                            # herramienta de CachyOS
+smartmontools
+sof-firmware                      # hw:laptop firmware de audio Intel SOF
+starship
+sudo
+sysfsutils
+system-config-printer
+texinfo
+thunar
+thunar-archive-plugin
+thunar-volman
+trash-cli
+tree-sitter-cli
+ttf-bitstream-vera
+ttf-dejavu
+ttf-jetbrains-mono-nerd
+ttf-liberation
+ttf-meslo-nerd
+ttf-opensans
+tumbler
+tuned-ppd                         # choca con `cpupower`: ver docs/AUDITORIA.md
+ufw
+ufw-extras
+unrar
+unzip
+upower
+usb_modeswitch
+usbutils
+uwsm
+vim
+vlc-plugins-all
+vulkan-radeon                     # hw:amd
+wget
+which
+wireplumber
+wl-clipboard
+wpa_supplicant
+xdg-desktop-portal-gtk
+xdg-desktop-portal-hyprland
+xdg-user-dirs
+xdg-utils
+xf86-video-amdgpu                 # hw:amd
+xfsprogs
+xl2tpd
+ydotool                           # necesita el servicio ydotool y el grupo `input`
+zathura
+zathura-pdf-mupdf
+zen-browser-bin
+zoxide

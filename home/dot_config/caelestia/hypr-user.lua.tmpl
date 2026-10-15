@@ -1,0 +1,44 @@
+-- Wallpaper random
+hl.bind("SUPER + SHIFT + W", hl.dsp.exec_cmd("caelestia wallpaper -r {{ .chezmoi.homeDir }}/Imágenes/Wallpapers && caelestia scheme set -n dynamic"))
+
+-- Modos de energia
+hl.bind("SUPER + F1", hl.dsp.exec_cmd("powerprofilesctl set power-saver"))
+hl.bind("SUPER + F2", hl.dsp.exec_cmd("powerprofilesctl set balanced"))
+hl.bind("SUPER + F3", hl.dsp.exec_cmd("powerprofilesctl set performance"))
+
+-- Thunar con blur y transparencia
+hl.window_rule({ match = { class = "thunar" }, opacity = "0.92 override" })
+hl.window_rule({ match = { class = "Thunar" }, opacity = "0.92 override" })
+
+-- Blur mas vivido + Dim en inactivas (un solo hl.config)
+hl.config({
+    decoration = {
+        blur = {
+            vibrancy          = 0.30,
+            vibrancy_darkness = 0.2,
+            contrast          = 1.15,
+            brightness        = 1.05,
+            noise             = 0.02,
+        },
+        dim_inactive = true,
+        dim_strength = 0.15,
+    },
+})
+
+-- Volver al workspace anterior
+hl.bind("SUPER + Tab", hl.dsp.focus({ workspace = "previous" }))
+
+-- Velocidades de animación personales. Upstream carga hypr-user.lua al final;
+-- no editamos hypr/hyprland/animations.lua (propiedad de Caelestia).
+-- Revisar estas hojas tras cambios mayores de la API Lua de Hyprland.
+hl.animation({ leaf = "layersIn", enabled = true, speed = 3, bezier = "emphasizedDecel", style = "slide" })
+hl.animation({ leaf = "layersOut", enabled = true, speed = 2, bezier = "emphasizedAccel" })
+hl.animation({ leaf = "fadeLayers", enabled = true, speed = 3, bezier = "standard" })
+hl.animation({ leaf = "windowsIn", enabled = true, speed = 3, bezier = "emphasizedDecel" })
+hl.animation({ leaf = "windowsOut", enabled = true, speed = 2, bezier = "emphasizedAccel" })
+hl.animation({ leaf = "windowsMove", enabled = true, speed = 4, bezier = "standard" })
+hl.animation({ leaf = "workspaces", enabled = true, speed = 3, bezier = "standard" })
+hl.animation({ leaf = "specialWorkspace", enabled = true, speed = 3, bezier = "specialWorkSwitch", style = "slidefadevert 15%" })
+hl.animation({ leaf = "fade", enabled = true, speed = 3, bezier = "standard" })
+hl.animation({ leaf = "fadeDim", enabled = true, speed = 3, bezier = "standard" })
+hl.animation({ leaf = "border", enabled = true, speed = 4, bezier = "standard" })

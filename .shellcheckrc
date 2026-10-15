@@ -1,0 +1,12 @@
+# Exclusiones globales de shellcheck.
+#
+# SC1090/SC1091: los scripts hacen `source` de librerías cuyo path se resuelve
+#                en tiempo de ejecución (shellcheck no puede seguirlas).
+# SC2034:        variables definidas en scripts/lib y consumidas por otros.
+# SC2154:        variables que vienen de config/defaults.env y config/host.*.env.
+# SC2312:        `set -o pipefail` + $(...) dentro de condiciones; ruido sin valor.
+exclude=SC1090
+exclude=SC1091
+exclude=SC2034
+exclude=SC2154
+exclude=SC2312
