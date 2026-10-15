@@ -1,0 +1,195 @@
+# ---------------------------------------------------------------------------
+# NÚCLEO — lo mínimo para que el escritorio se vea y se sienta igual.
+#
+# Uso:   ./install.sh paquetes --core-only
+#        make instalar-nucleo
+#
+# Si estás montando una PC nueva con prisa, esta es la lista que importa.
+# Después corres el instalador completo (o `make instalar`) para el resto.
+#
+# Reglas:
+#   - Mezcla repos oficiales y AUR a propósito: el instalador detecta solo de
+#     dónde viene cada paquete.
+#   - `# hw:` filtra por hardware (ver scripts/lib/hardware.sh).
+#   - Todo lo que NO esté aquí pero sí en oficiales.txt/aur.txt se instala con
+#     el tier `full` (el predeterminado).
+# ---------------------------------------------------------------------------
+
+# === Base y toolchain ======================================================
+base-devel                        # makepkg/gcc: obligatorio para AUR
+git
+github-cli
+chezmoi                           # motor de dotfiles de este repo
+sudo
+which
+curl
+wget
+rsync
+unzip
+jq
+less
+pacman-contrib                    # checkupdates, pactree...
+paru                              # helper de AUR (en CachyOS viene oficial)
+pkgfile                           # "ese comando no existe" -> te dice el paquete
+plocate                           # locate rápido
+arch-audit                        # avisos de seguridad de paquetes
+informant                         # leer noticias de archlinux antes de actualizar
+
+# === Gráficos / Wayland / Hyprland =========================================
+hyprland
+uwsm                              # gestor de sesión Wayland
+greetd
+greetd-tuigreet                   # login en terminal (ver system/etc/greetd)
+xdg-desktop-portal-hyprland
+xdg-desktop-portal-gtk
+polkit-gnome                      # agente de autenticación
+gnome-keyring
+accountsservice
+mesa
+mesa-utils
+vulkan-radeon                     # hw:amd
+xf86-video-amdgpu                 # hw:amd
+lib32-mesa
+lib32-vulkan-radeon               # hw:amd (Steam/juegos de 32 bits)
+libva-utils                       # comprobar aceleración de vídeo
+gst-libav
+gst-plugins-bad
+gst-plugins-ugly
+gst-plugin-va
+ffmpegthumbnailer
+
+# === Audio =================================================================
+pipewire
+pipewire-pulse
+pipewire-alsa
+pipewire-jack
+pipewire-audio
+wireplumber
+gst-plugin-pipewire
+alsa-utils
+alsa-plugins
+pavucontrol
+pwvucontrol
+sof-firmware                      # hw:laptop
+
+# === Red / bluetooth / energía =============================================
+networkmanager
+networkmanager-openvpn
+nss-mdns                          # .local -> localsend y impresoras
+dnsmasq
+modemmanager                      # hw:laptop
+upower                            # hw:laptop
+bluez
+bluez-utils
+bluez-obex
+bluez-hid2hci
+cpupower
+tuned-ppd
+# (eliminado de propósito: iwd)
+
+# === Entrada / portapapeles / utilidades de sesión =========================
+wl-clipboard
+cliphist                           # historial de portapapeles (lo arranca hyprland)
+ydotool                           # emular teclado en Wayland
+hyprpicker                        # selector de color
+gammastep                         # temperatura de color
+mousetweaks
+xdg-user-dirs
+xdg-utils
+# (eliminado de propósito: gsettings)
+
+# === Terminal / shell / CLI ================================================
+foot                              # terminal predeterminada (dot_config/foot)
+alacritty
+fish
+starship
+zoxide
+direnv
+eza
+bat
+btop
+glances
+duf
+micro
+nano
+nano-syntax-highlighting
+neovim
+vim
+ripgrep
+trash-cli
+pv
+tree-sitter-cli
+fastfetch
+
+# === Desarrollo ============================================================
+mise                              # gestor de toolchains (node/python/go/...)
+npm
+pnpm
+python
+rustup
+lazygit
+meld
+docker
+
+# === Fuentes (sin estas, foot/caelestia se ven rotos) =======================
+ttf-jetbrains-mono-nerd
+ttf-meslo-nerd
+ttf-dejavu
+ttf-liberation
+ttf-bitstream-vera
+ttf-opensans
+noto-fonts
+noto-fonts-emoji
+noto-fonts-cjk
+cantarell-fonts
+awesome-terminal-fonts
+
+# === Temas =================================================================
+adw-gtk-theme
+papirus-icon-theme
+
+# === Apps del día a día ====================================================
+thunar
+thunar-volman
+thunar-archive-plugin
+tumbler
+file-roller
+mpv
+imv
+vlc-plugins-all
+zathura
+zathura-pdf-mupdf
+poppler-glib
+qbittorrent
+localsend
+bitwarden
+discord
+zen-browser-bin
+protonup-qt
+
+# === Impresión =============================================================
+cups
+cups-filters
+system-config-printer
+hplip
+ghostscript
+foomatic-db
+foomatic-db-engine
+foomatic-db-ppds
+
+# === Seguridad =============================================================
+ufw
+ufw-extras
+openssh
+
+# === Caelestia (AUR) =======================================================
+caelestia-shell
+caelestia-cli
+quickshell-git
+qtengine
+darkly-bin
+papirus-folders
+caelestia-firefox-theme
+vscodium-bin
+topgrade
+wl-screenrec

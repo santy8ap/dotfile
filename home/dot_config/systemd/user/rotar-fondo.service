@@ -1,0 +1,10 @@
+[Unit]
+Description=Cambiar el fondo de Caelestia
+
+# Solo tiene sentido con una sesión Hyprland viva (%t = $XDG_RUNTIME_DIR).
+# Sin esto el timer falla y llena el journal de errores al arrancar.
+ConditionPathIsDirectory=%t/hypr
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/rotar-fondo

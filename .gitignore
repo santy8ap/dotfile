@@ -1,0 +1,72 @@
+# ---------------------------------------------------------------------------
+# Respaldos generados automáticamente por caelestia / hyprland / editores.
+# Estas copias las crea la propia app al guardar y solo ensucian el historial.
+# ---------------------------------------------------------------------------
+*.bak
+*.bak.*
+*.old
+*.orig
+*.rej
+*~
+.*.swp
+.*.swo
+
+# ---------------------------------------------------------------------------
+# Archivos que las aplicaciones reescriben en caliente. Gestionarlos con
+# chezmoi produce conflictos constantes (chezmoi apply los revierte).
+# Ver docs/AUDITORIA.md -> "Archivos volátiles".
+# ---------------------------------------------------------------------------
+home/dot_config/fish/fish_variables
+home/dot_config/fish/fish_history
+home/dot_config/fish/fish_read_history
+home/dot_config/fish/completions/
+home/dot_config/fish/conf.d/
+home/dot_config/caelestia/monitors/
+home/dot_config/hypr/scheme/current.lua
+home/dot_local/state/
+home/dot_cache/
+
+# ---------------------------------------------------------------------------
+# Nunca al repositorio: secretos, tokens, llaves, historiales.
+# Ver docs/SECRETOS.md
+# ---------------------------------------------------------------------------
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+id_ecdsa
+*.pub.asc
+*.secret
+*.secret.*
+.netrc
+.git-credentials
+home/dot_ssh/
+private_dot_ssh/
+secrets/
+.env
+.env.*
+!config/host.example.env
+
+# ---------------------------------------------------------------------------
+# Artefactos locales del instalador (logs, respaldos, estado de pasos).
+# ---------------------------------------------------------------------------
+*.log
+logs/
+tmp/
+.cache/
+backups/
+config/host.*.env
+
+# ---------------------------------------------------------------------------
+# Sistema operativo / editores
+# ---------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+.directory
+.Trash-*
+.idea/
+.vscode/
+*.code-workspace

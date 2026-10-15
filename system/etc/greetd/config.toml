@@ -1,0 +1,10 @@
+# Copia del esquema de inicio confirmado por el usuario en su Lenovo 82FJ.
+# Este archivo NO se aplica por defecto (DOTFILE_APPLY_ETC=no).
+# Antes de activarlo en otra instalación, comprobar `command -v start-hyprland`:
+# el origen y el contenido del wrapper aún están por identificar.
+[terminal]
+vt = 1
+
+[default_session]
+command = "tuigreet --time --remember --asterisks --cmd start-hyprland"
+user = "greeter"

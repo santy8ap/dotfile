@@ -1,0 +1,16 @@
+#!/bin/sh
+# Cambia el fondo de pantalla usando el generador de caelestia.
+# Lo dispara systemd (rotar-fondo.timer), por eso no hay sesión interactiva:
+# hay que averiguar a mano el HYPRLAND_INSTANCE_SIGNATURE.
+
+set -u
+
+# Sin sesión Hyprland activa no hay nada que hacer (evita errores en el journal
+# cuando el equipo está en TTY, bloqueado o recién arrancado).
+[ -d "${XDG_RUNTIME_DIR:-}/hypr" ] || exit 0
+
+HYPRLAND_INSTANCE_SIGNATURE="${HYPRLAND_INSTANCE_SIGNATURE:-$(ls -t "${XDG_RUNTIME_DIR}/hypr" 2>/dev/null | head -n 1)}"
+[ -n "${HYPRLAND_INSTANCE_SIGNATURE}" ] || exit 0
+export HYPRLAND_INSTANCE_SIGNATURE
+
+exec caelestia wallpaper -r "${HOME}/Imágenes/Wallpapers" -N

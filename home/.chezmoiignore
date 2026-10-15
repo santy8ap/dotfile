@@ -1,0 +1,65 @@
+# ---------------------------------------------------------------------------
+# .chezmoiignore — rutas (relativas a $HOME) que chezmoi NO debe tocar.
+#
+# Ojo: este archivo vive dentro de `home/` porque `.chezmoiroot` = home.
+# Las rutas se escriben tal como quedarían bajo $HOME, no con los prefijos
+# de chezmoi (dot_, private_, ...).
+# ---------------------------------------------------------------------------
+
+# Respaldos que caelestia / hyprland / editores crean al guardar un archivo.
+# Si no se ignoran, chezmoi los copiaría a $HOME como archivos sueltos.
+**/*.bak
+**/*.old
+**/*.orig
+**/*.rej
+**/*~
+
+# ---------------------------------------------------------------------------
+# Archivos volátiles: la aplicación los reescribe sola y cada `chezmoi apply`
+# los revertiría, generando conflictos permanentes.
+#   - fish_variables : fish lo reescribe ante cualquier variable universal
+#   - fish_history   : historial del shell
+#   - monitors/*     : overrides por monitor, dependen del hardware
+# ---------------------------------------------------------------------------
+.config/fish/fish_variables
+.config/fish/fish_history
+.config/fish/fish_read_history
+.config/fish/completions/**
+.config/fish/conf.d/**
+.config/caelestia/monitors/**
+.local/state/**
+.cache/**
+
+# ---------------------------------------------------------------------------
+# Este repo solo tiene sentido en Arch/CachyOS con systemd. Si algún día se
+# aplica en otro lado, no tocar unidades systemd.
+# ---------------------------------------------------------------------------
+{{- if ne .chezmoi.os "linux" }}
+.config/systemd/**
+.local/bin/rotar-fondo
+{{- end }}
+
+# ---------------------------------------------------------------------------
+# Unidades systemd de usuario que solo deben existir si la app está presente.
+# (rotar-fondo depende de `caelestia`; si no está instalado, mejor no crearla)
+# ---------------------------------------------------------------------------
+{{- if not (lookPath "caelestia") }}
+.config/systemd/user/rotar-fondo.service
+.config/systemd/user/rotar-fondo.timer
+.local/bin/rotar-fondo
+{{- end }}
+
+# Caelestia upstream es dueño de estos archivos. Después de `caelestia
+# install/update` NO restaurar aquí copias antiguas de sus módulos Lua:
+# podrían romper la API nueva. Tus cambios viven en caelestia/hypr-vars.lua y
+# caelestia/hypr-user.lua. Las copias bajo home/dot_config/hypr quedan como
+# referencia para auditoría y modo de emergencia sin upstream.
+{{- if lookPath "caelestia" }}
+.config/hypr/hyprland.conf
+.config/hypr/hyprland.lua
+.config/hypr/variables.lua
+.config/hypr/hyprland/**
+.config/hypr/scheme/default.lua
+.config/hypr/scheme/current.lua
+.config/hypr/utils/**
+{{- end }}
