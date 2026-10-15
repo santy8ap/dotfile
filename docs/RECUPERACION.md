@@ -1,37 +1,60 @@
-# Auditoría del repositorio (octubre de 2026)
+# Recuperación después de una instalación fallida
 
-## Hallazgos iniciales
+> Este procedimiento aún no se ha validado en una instalación limpia de CachyOS. Si cambias el gestor de inicio de sesión o el arranque, ten a mano un medio de rescate y un respaldo externo.
 
-El repo original tenía 41 archivos: dotfiles de Caelestia, Hyprland, fish, foot, VSCodium, un timer para cambiar fondos y dos listados de paquetes. **No había README, instalador, pruebas, backup ni reglas de privacidad.** Se encontraron copias `.bak`, `fish_variables` con rutas `/home/santy`, rutas absolutas en Caelestia y ningún mecanismo de aplicar configuraciones de sistema.
+## 1. Recuperar una terminal
 
-Se organizaron los archivos bajo `home/` para chezmoi, se reemplazaron las rutas de usuario en dos plantillas, se retiraron copias `.bak` y variables volátiles y se agregó un instalador por etapas. El archivo original `hyprland.conf` coexiste con `hyprland.lua`. En el flujo nuevo ambos quedan como referencia: cuando está instalado el CLI de Caelestia, `.chezmoiignore` evita sobrescribir los módulos Hyprland del upstream; tus valores se aplican vía `hypr-vars.lua` y `hypr-user.lua`. Hay que comprobar el resultado visual en una sesión real.
+Si la sesión gráfica no abre, prueba `Ctrl`+`Alt`+`F2` (o F3/F4) para entrar por TTY con tu usuario. **No borres tu configuración anterior** hasta saber qué falló. Si no hay TTY o el sistema no arranca, inicia con el medio de instalación/rescate de CachyOS; no intentes cambios de arranque a ciegas.
 
-## Faltantes por capturar en tu PC original
+Consulta el resultado del instalador y las etapas:
 
-Ejecuta `./scripts/capture.sh --list` **en el CachyOS original**; este entorno no tiene acceso a tus archivos. Candidatos: `~/.gitconfig`, `~/.config/nvim`, `starship.toml`, `mise`, `btop`, `lazygit`, `mpv`, `zathura`, `fastfetch`, `gammastep`, `qtengine`, GTK, iconos, entradas `.desktop`, MIME, reglas de usuario y ajustes de energía. Después de capturar, revisa todo antes del push. La configuración de fish universal y overrides por monitor son volátiles y se excluyeron intencionalmente.
+```bash
+cd ~/dotfile
+./install.sh --list-stages
+ls -lt ~/.local/state/dotfile-installer/logs/
+./install.sh verify --force
+```
 
-## Datos que requieren respaldo independiente
+La verificación puede marcar fallos esperables desde TTY sin sesión gráfica; lee cada línea antes de actuar. Si la instalación se detuvo en una etapa, corrige primero la causa y usa `./install.sh --resume`; **no fuerces todas las etapas** indiscriminadamente.
 
-- `~/Imágenes/Wallpapers`: **no hay imágenes** en Git. El timer y el binding dependen de ellas; usa un disco externo, nube o repo de medios separado.
-- Perfil de Zen/Firefox, marcadores e historial: sincroniza con la app o respáldalos cifrados fuera de este repo.
-- Claves SSH, tokens, credenciales GitHub/Bitwarden, llaveros GNOME, historial de portapapeles: nunca subirlos en texto plano. Ver [SECRETOS.md](SECRETOS.md).
-- Documentos, fotos, juegos, contenedores Docker, bases de datos y perfiles de aplicaciones: **no incluidos**.
-- Particiones, fstab, LUKS, bootloader, kernel, firmware y drivers de otras GPUs: se configuran en el instalador de CachyOS, no mediante estos scripts.
+## 2. Examinar y restaurar la configuración de usuario
 
-## Límites y decisiones pendientes
+El respaldo local se crea bajo `~/.local/state/dotfile-installer/backups/`, en el **mismo disco**, y conserva por defecto hasta cinco archivos comprimidos. Se excluyen cachés y ciertos datos grandes; no sustituye el respaldo externo.
 
-1. Confirmar modelo GPU/CPU de la máquina destino. Los paquetes originales incluyen Radeon/AMD y kernels CachyOS; el filtrado por hardware es aproximado, especialmente en equipos con GPU híbrida.
-2. Confirmado: greetd/tuigreet ejecuta `start-hyprland` en la máquina original; el ejecutable proviene del paquete `hyprland`. Probarlo en una instalación limpia; `system/etc/greetd/config.toml` refleja la salida del usuario, pero **no se aplica automáticamente**. Ver [MAQUINA_ORIGINAL.md](MAQUINA_ORIGINAL.md).
-3. Confirmar si realmente usas `tuned-ppd` o `cpupower`: dos gestores de energía pueden competir; el sudoers para cpupower está desactivado por defecto.
-4. Wallpapers confirmados en `~/Imágenes/Wallpapers` (69 archivos, ~159 MiB); el usuario tiene respaldo externo. Documentar cómo se copian tras instalar. Perfiles del navegador fuera del alcance acordado.
-5. Decidir el futuro de secretos: actualmente se manejan **fuera** del repositorio, según lo acordado para esta primera versión.
-6. Listas de paquetes son una **captura puntual**, no un lockfile: AUR puede cambiar nombres, desaparecer o tener builds incompatibles. Nada instala la distro ni garantiza que el escritorio sea idéntico.
-7. `hyprland.conf` y configuración Lua dependen de la versión actual de Hyprland/Caelestia. Comprobarlos en la máquina original antes de confiar en el setup.
+```bash
+./scripts/backup.sh --list
+./scripts/backup.sh --restore 1
+```
 
-## Seguridad operacional
+Antes de confirmar la restauración, verifica que el número corresponde al respaldo correcto. El script restaura sobre `$HOME`: **sobrescribe** los archivos que estén en el archivo tar, **no elimina** archivos nuevos. Si necesitas solo uno, inspecciona primero el tar correspondiente y extrae el archivo de forma selectiva en lugar de restaurar todo.
 
-`--dry-run` y `./scripts/lint.sh --quick` permiten inspeccionar sin instalar paquetes. Antes de tocar `/etc` o habilitar servicios se debe verificar el hardware, leer los scripts y tener un medio de rescate. `DOTFILE_APPLY_ETC=no`, `DOTFILE_PLYMOUTH_MKINITCPIO=no`, `DOTFILE_SUDOERS_CPUPOWER=no` y `DOTFILE_CHWD=no` por defecto. El respaldo de `~/.config` está en `~/.local/state/dotfile-installer/backups`, **en el mismo disco**: no sustituye un backup externo.
+## 3. Archivos del sistema y login
 
-## Base upstream (decisión nueva)
+Los respaldos de archivos de `/etc` modificados por los scripts se guardan aparte en `~/.local/state/dotfile-installer/backups/system/etc/`, y **no** están en el tar anterior. El instalador cancela una modificación crítica si falla el respaldo, pero el CLI oficial y los comandos del sistema tienen sus propios efectos. Compara el archivo actual con su copia antes de restaurarlo; usa `sudo` solo para el archivo concreto que de verdad quieras recuperar. **Nunca restaures `/etc` entero de otra máquina**.
 
-La instalación futura usa `caelestia-cli` → `caelestia install` para obtener los dots oficiales desde `caelestia-dots/caelestia` antes de aplicar nuestras configuraciones. Upstream conserva estado en `~/.local/state/caelestia/dots-state.json` y provee `caelestia update` para nuevas versiones. El shell en `caelestia-dots/shell` es solo un componente; su README remite al CLI para el escritorio completo. **El CLI instala dotfiles y paquetes, pero no configura hardware ni gestor de login.** Este diseño se verificó leyendo la documentación/código upstream, no ejecutándolo aún en CachyOS real.
+Si activaste `greetd` manualmente y dejó de funcionar, vuelve a una TTY y comprueba las unidades y el journal:
+
+```bash
+systemctl status greetd
+journalctl -b -u greetd --no-pager
+command -v start-hyprland
+command -v tuigreet
+```
+
+No habilites `greetd` hasta comprobar ambos ejecutables y revisar `system/etc/greetd/config.toml`. Si no inicia la sesión, deshabilita temporalmente la unidad desde una TTY (`sudo systemctl disable --now greetd`) para volver al arranque sin gestor gráfico mientras investigas. Si tocaste Plymouth/mkinitcpio manualmente, usa el respaldo específico, el medio de rescate y la documentación de CachyOS antes de regenerar initramfs.
+
+## 4. Caelestia y chezmoi
+
+Este repositorio **no cambia** el source global de chezmoi. Para inspeccionar *su* capa sin aplicar cambios:
+
+```bash
+cd ~/dotfile
+chezmoi --source "$PWD" diff
+chezmoi --source "$PWD" managed
+```
+
+Los dots oficiales se administran con `caelestia-cli` y mantienen estado en `~/.local/state/caelestia/`. No ejecutes `caelestia install` repetidamente sobre un escritorio con cambios propios para intentar arreglarlo. Revisa conflictos `.new` y sigue [ACTUALIZACIONES.md](ACTUALIZACIONES.md). Si restauras un backup de usuario antiguo, compara sus archivos con la versión actual antes de volver a aplicar la capa personal.
+
+## 5. Lo que este repositorio no puede recuperar
+
+Wallpapers (respaldados externamente), perfiles del navegador, documentos, claves, particiones, cifrado, cargador de arranque y firmware no forman parte de este proyecto. Ver [SECRETOS.md](SECRETOS.md) y [PENDIENTES.md](PENDIENTES.md).
